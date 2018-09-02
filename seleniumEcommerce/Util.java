@@ -27,6 +27,7 @@ public class Util {
 			
 	public static WebDriver driver;
 	public static WebDriverWait wait;
+	public static String name;
 	
 	public static String compareMobile1;
 	public static String compareMobile2;
@@ -116,5 +117,48 @@ public class Util {
 	public static void popupWindow(){
 		insidePopupMobile1 = driver.findElement(ByXPath.xpath("//*[@id='product_comparison']/tbody[1]/tr[1]/td[1]/h2/a")).getText();		
 		insidePopupMobile2 = driver.findElement(ByXPath.xpath("//*[@id='product_comparison']/tbody[1]/tr[1]/td[2]/h2/a")).getText();
+	}
+	
+	public static String accountVerify() throws InterruptedException{
+		int i = (int)(Math.random() * ((1000 - 1) + 1)) + 1;
+		String fn = "abc"+String.valueOf(i);
+		String ln = "123";
+
+		driver.findElement(ByXPath.xpath("//*[@id='header']/div/div[2]/div/a/span[2]")).click();
+		driver.findElement(ByXPath.xpath("//*[@id='header-account']/div/ul/li[1]/a")).click();
+		
+		Thread.sleep(1000);
+		
+		driver.findElement(ByXPath.xpath("//*[@id='login-form']/div/div[1]/div[2]/a/span/span")).click();
+		
+		WebElement firstname = driver.findElement(By.id("firstname"));
+		WebElement lastname = driver.findElement(By.id("lastname"));
+		WebElement email = driver.findElement(By.id("email_address"));
+		WebElement password = driver.findElement(By.id("password"));
+		WebElement confirmation = driver.findElement(By.id("confirmation"));
+		
+		firstname.clear();
+		firstname.sendKeys(fn);
+		
+		lastname.clear();
+		lastname.sendKeys(ln);
+		
+		name = "Welcome, " + fn + " " + ln + "!";
+		
+		email.clear();
+		email.sendKeys("x"+String.valueOf(i)+"y"+"@123.com");
+		
+		password.clear();
+		password.sendKeys("abc123");
+		
+		confirmation.clear();
+		confirmation.sendKeys("abc123");
+		
+		driver.findElement(ByXPath.xpath("//*[@id='form-validate']/div[2]/button/span")).click();
+		
+		Thread.sleep(2000);
+		String welcome = driver.findElement(ByXPath.xpath("//*[@id='top']/body/div/div/div[1]/div/p")).getText();
+		
+		return welcome;
 	}
 }
