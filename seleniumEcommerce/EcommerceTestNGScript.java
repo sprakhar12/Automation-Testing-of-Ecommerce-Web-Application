@@ -102,6 +102,12 @@ public class EcommerceTestNGScript {
 	    	Util.driver.switchTo().window(handle);
 	    }	    
   	}
+	
+  @Test
+  public void accountVerify() throws InterruptedException{
+	  String welcome = Util.accountVerify();
+	  assertEquals(welcome, Util.name.toUpperCase());
+  }
 
   @AfterMethod
   public void tearDown() {
